@@ -1,0 +1,18 @@
+CREATE TABLE users(
+    id INTEGER PRIMARY KEY,
+    username TEXT,
+    password TEXT,
+
+);
+
+CREATE TABLE questions(
+    id INTEGER PRIMARY KEY,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    chapter TEXT,
+    type TEXT,
+    marks INTEGER
+);
+
+INSERT INTO users(username, password) VALUES("examiner", "$2b$10$IH5wjcwhy/rO.RO3CHrx2.L9b.Sln0DZgghtUXNagbJqRckKz3smW");
+INSERT INTO users(username, password) VALUES("training_instructor", "$2b$10$txELTZM8I68jk7XwoMUKr.E.kEGdiAbDg0BBhHQKcBrcwDzBsEhCO");
