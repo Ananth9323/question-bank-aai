@@ -14,5 +14,17 @@ CREATE TABLE questions(
     marks INTEGER
 );
 
+CREATE TABLE question_papers (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    course TEXT NOT NULL,
+    total_marks INTEGER NOT NULL,
+    blueprint TEXT NOT NULL,
+    created_by INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES users (id)
+);
+
+
 INSERT INTO users(username, password) VALUES("examiner", "$2b$10$IH5wjcwhy/rO.RO3CHrx2.L9b.Sln0DZgghtUXNagbJqRckKz3smW");
 INSERT INTO users(username, password) VALUES("training_instructor", "$2b$10$txELTZM8I68jk7XwoMUKr.E.kEGdiAbDg0BBhHQKcBrcwDzBsEhCO");

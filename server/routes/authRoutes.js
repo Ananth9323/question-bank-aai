@@ -10,6 +10,8 @@ const secretKey = "123456789";
 router.post('/login', (req,res) => {
     const {username,password} = req.body;
     db.get("SELECT * FROM users WHERE username = ?", [username], (err,user) => {
+        console.log(password);
+        
         if(err) return res.status(500).json({error : err});
         if(!user) return res.status(404).json({ error: "User not found"});
 
