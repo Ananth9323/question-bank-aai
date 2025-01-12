@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setQuestions } from "../slices/questionsSlice";
 
 const BlueprintForm = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +10,9 @@ const BlueprintForm = () => {
     totalMarks: 0,
     blueprint: [],
   });
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -61,9 +67,28 @@ const BlueprintForm = () => {
     return formData.totalMarks - usedMarks;
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/papers/generate", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ blueprint: formData.blueprint }),
+      });
+
+      if (!response.ok) throw new Error("Failed to generate questions");
+      const questions = await response.json();
+
+      dispatch(setQuestions(questions)); // Save questions in Redux
+      navigate("/question-preview");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100">
-      <form className="w-full max-w-lg bg-white p-8 rounded-lg shadow-md">
+      <form className="w-full max-w-lg bg-white p-8 rounded-lg shadow-md" onSubmit={handleSubmit}>
         <h1 className="text-2xl font-bold text-gray-800 mb-6">
           Create Blueprint
         </h1>
